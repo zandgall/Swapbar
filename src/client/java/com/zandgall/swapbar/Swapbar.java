@@ -1,6 +1,6 @@
 package com.zandgall.swapbar;
 
-import net.fabricmc.api.ModInitializer;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
@@ -12,7 +12,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.Identifier;
 
-public class Swapbar implements ModInitializer {
+public class Swapbar implements ClientModInitializer {
 	public static KeyBinding switchKey;
 	private static KeyBinding createKeyBinding(Identifier id, InputUtil.Type type, int code, String category) {
 		return KeyBindingHelper.registerKeyBinding(new KeyBinding("key." + id.getNamespace() + "." + id.getPath(), type, code, category));
@@ -21,9 +21,9 @@ public class Swapbar implements ModInitializer {
 	private static PlayerInventory inventory;
 
 	@Override
-	public void onInitialize() {
+	public void onInitializeClient() {
 		switchKey = createKeyBinding(
-				new Identifier("hotbarswitcher", "swap"), InputUtil.Type.KEYSYM, 82, "key.hotbarswitcher.category");
+				new Identifier("swapbar", "swap"), InputUtil.Type.KEYSYM, 82, "key.swapbar.category");
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			ClientPlayerEntity player = MinecraftClient.getInstance().player;
 			if (player != null) {
